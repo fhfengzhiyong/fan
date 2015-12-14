@@ -1,0 +1,29 @@
+{% extends 'common/layout.html' %}
+{% block content %}
+    <div class="container-fluid ">
+        <div class="row-fluid">
+            <div class="span12">
+                <form action="update" method="POST">
+                    <input type="hidden" name="old" value="{{ merchant.id }}">
+                    <fieldset>
+                        <legend>添加商家</legend>
+                        <span>名称：</span><input  name="name" class="" value="{{ merchant.name }}" type="text"/>
+                        <label></label><span>联系人：</span><input name="link_name" value="{{ merchant.link_name }}" type="text"/></label>
+                        <label><span>手机：</span><input name="mobile" value="{{ merchant.mobile }}" type="text"/></label>
+                        <label><span>描述：</span><input name="description" value="{{ merchant.description }}" type="text"/></label>
+                        <label><span>地址：</span><input name="address" value="{{ merchant.address }}" type="text"/></label>
+                       <label> <span>qq：</span><input class="" name="qq" value="{{ merchant.qq }}" type="text"/></label>
+                        <label><span>邮箱：</span><input name="mail" value="{{ merchant.mail }}" type="text"/></label>
+                        <label><span>微信号：</span><input name="we_chat"  value="{{ merchant.we_chat }}" type="text"/></label>
+                        <!--
+                        <span class="help-block">这里填写帮助信息.</span>
+                        -->
+
+                        <button type="submit" class="btn btn-success">提交</button>
+                        <a href="/merchant" class="btn btn-primary">返回</a>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)http://127.0.0.1/dede/login.php?gotopage=%2Fdede%2Findex.php -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/static/common/register/css/login.css"/>
+    <script type="text/javascript" src="/static/jquery/jquery-2.0.0.min.js"></script>
+    <script type="text/javascript" src="/static/common/register/js/login.js"></script>
+    <title>注册</title>
+
+</head>
+<body style="overflow:hidden">
+<div class="pagewrap">
+    <div class="main">
+        <div class="header"></div>
+        <div class="content">
+            <div class="con_left"></div>
+            <div class="con_right">
+                <div class="con_r_top"><a href="javascript:;" class="left"
+                                          style="color: rgb(153, 153, 153); border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: rgb(222, 222, 222);">关注我们</a>
+                    <a href="javascript:;" class="right"
+                       style="color: rgb(51, 51, 51); border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: rgb(46, 85, 142);">登录管理</a>
+                </div>
+                <ul>
+                    <li class="con_r_left" style="display: none;">
+                        <div class="erweima">
+                            <div class="qrcode">
+                                <div id="output" style="width: 100%; position: relative">
+                                    <img src="/static/img/redister/erweima.jpg" style="width: 174px; height: 174px">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="height: 70px">
+                            <p>微信扫码 安全便捷</p>
+                        </div>
+                    </li>
+
+
+                    <li class="con_r_right" style="display: block;">
+                        <form name="form1" method="post" action="/register" autocomplete="off">
+                            {% if get_flashed_messages()[0] %}
+                                        <div style="text-align: center">
+                                        <strong>{{ get_flashed_messages()[0] }}</strong>
+                                        </div>
+                            {% endif %}
+                            <div class="user">
+                                <div><span class="user-icon"></span>
+                                    <input type="text" id="userid" name="account" placeholder="　输入账号" value="">
+                                </div>
+
+                                <div><span class="mima-icon"></span>
+                                    <input type="password" id="pwd" name="password" placeholder="　输入密码" value="">
+                                </div>
+
+                                <div style="margin-left: 40px">
+                                    <script type="text/javascript" src="{{ url }}"></script>
+                                </div>
+
+                            </div>
+                            <br>
+                            <button id="btn_Login" type="submit">登 录</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

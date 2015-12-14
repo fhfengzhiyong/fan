@@ -1,0 +1,53 @@
+{% extends 'common/layout.html' %}
+{% block content %}
+    <!-- 配置文件 -->
+    <script type="text/javascript" src="/static/UEditor/ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="/static/UEditor/ueditor.all.js"></script>
+    <!-- 实例化编辑器 -->
+    <script type="text/javascript">
+       var ue = UE.getEditor('container');
+    function send(){
+        var con = ue.getContent();
+        $('#content').val(con);
+        $('form').submit();
+    }
+    </script>
+    <div class="container ">
+        <div class="row-fluid">
+            <div class="span12">
+                <form action="add" id="form" class="bs-example bs-example-form" role="form" method="POST">
+                    <fieldset>
+                        <legend>写博客</legend>
+                        <span>标题：</span><input name="title" class="form-control" type="text"/>
+                        <br/>
+                        <span>简介：</span>
+                                <textarea name="synopsis" class="form-control" ></textarea>
+                        <label><span>分类：</span>
+                            <select name="classify">
+                                <optgroup label="">
+                                    <option value="">默认分类</option>
+                                </optgroup>
+                            </select>
+                        </label>
+                        <label><span>内容：</span></label>
+                          <input type="hidden" name="content" id="content">
+                            <script id="container" name="content" type="text/plain"></script>
+                            <!-- 加载编辑器的容器 -->
+                        <label><span>状态：</span>
+                            <select name="state">
+                                <optgroup label="">
+                                    <option value="0">草稿</option>
+                                    <option value="1">发布</option>
+                                </optgroup>
+                            </select>
+                        </label>
+
+                        <a class="btn btn-success" onclick="send()">提交</a>
+                        <a href="/blogs" class="btn btn-primary">返回</a>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'common/layout.html' %}
+{% block content %}
+    <div class="container-fluid ">
+        <div class="row-fluid">
+            <div class="span12">
+                <form action="add" method="POST">
+                    <fieldset>
+                        <legend>添加商家</legend>
+                        <span>名称：</span><input  name="name" class="" type="text"/>
+                        <label></label><span>联系人：</span><input name="link_name" type="text"/></label>
+                        <label><span>手机：</span><input name="mobile" type="text"/></label>
+                        <label><span>描述：</span><input name="description" type="text"/></label>
+                        <label><span>地址：</span><input name="address" type="text"/></label>
+                       <label> <span>qq：</span><input class="" name="qq" type="text"/></label>
+                        <label><span>邮箱：</span><input name="mail" type="text"/></label>
+                        <label><span>微信号：</span><input name="we_chat" type="text"/></label>
+                        <!--
+                        <span class="help-block">这里填写帮助信息.</span>
+                        -->
+                             <label class="checkbox"><input type="checkbox"/> 勾选同意</label>
+                        <button type="submit" class="btn btn-success">提交</button>
+                        <a href="/merchant" class="btn btn-primary">返回</a>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
