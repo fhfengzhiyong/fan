@@ -1,9 +1,9 @@
 # fan
-ÏîÄ¿Ö¼ÔÚ½»Á÷Ñ§Ï°¡£
-³ÖĞø¸üĞÂ¡£¹²Í¬¿ª·¢¡£
-#ÏÖ×´
-·ÖÒ³¡¢ÈÏÖ¤Î´ÊµÏÖ¡£
+é¡¹ç›®æ—¨åœ¨äº¤æµå­¦ä¹ ã€‚
+æŒç»­æ›´æ–°ã€‚å…±åŒå¼€å‘ã€‚
+#ç°çŠ¶
+åˆ†é¡µã€è®¤è¯æœªå®ç°ã€‚
+![image](https://github.com/fhfengzhiyong/fan/raw/master/doc/4.jpg)
 ![image](https://github.com/fhfengzhiyong/fan/raw/master/doc/1.jpg)
 ![image](https://github.com/fhfengzhiyong/fan/raw/master/doc/2.jpg)
 ![image](https://github.com/fhfengzhiyong/fan/raw/master/doc/3.jpg)
-![image](https://github.com/fhfengzhiyong/fan/raw/master/doc/4.jpg)
