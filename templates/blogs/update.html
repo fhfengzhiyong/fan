@@ -1,26 +1,53 @@
 {% extends 'common/layout.html' %}
 {% block content %}
+    <!-- 配置文件 -->
+    <script type="text/javascript" src="/static/UEditor/ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="/static/UEditor/ueditor.all.js"></script>
+    <!-- 实例化编辑器 -->
+    <script type="text/javascript">
+       function send(){
+             var con = editor.getContent();
+            $('#content').val(con);
+            $('form').submit();
+        }
+    </script>
     <div class="container-fluid ">
         <div class="row-fluid">
             <div class="span12">
-                <form action="update" method="POST">
-                    <input type="hidden" name="old" value="{{ merchant.id }}">
+                <form action="update" id="form"  method="POST">
+                    <input type="hidden" value="{{ blogs.id }}" name="id">
                     <fieldset>
-                        <legend>添加商家</legend>
-                        <span>名称：</span><input  name="name" class="" value="{{ merchant.name }}" type="text"/>
-                        <label></label><span>联系人：</span><input name="link_name" value="{{ merchant.link_name }}" type="text"/></label>
-                        <label><span>手机：</span><input name="mobile" value="{{ merchant.mobile }}" type="text"/></label>
-                        <label><span>描述：</span><input name="description" value="{{ merchant.description }}" type="text"/></label>
-                        <label><span>地址：</span><input name="address" value="{{ merchant.address }}" type="text"/></label>
-                       <label> <span>qq：</span><input class="" name="qq" value="{{ merchant.qq }}" type="text"/></label>
-                        <label><span>邮箱：</span><input name="mail" value="{{ merchant.mail }}" type="text"/></label>
-                        <label><span>微信号：</span><input name="we_chat"  value="{{ merchant.we_chat }}" type="text"/></label>
-                        <!--
-                        <span class="help-block">这里填写帮助信息.</span>
-                        -->
-
-                        <button type="submit" class="btn btn-success">提交</button>
-                        <a href="/merchant" class="btn btn-primary">返回</a>
+                        <legend>写博客</legend>
+                        <span>标题：</span><input name="title" class="form-control" value="{{ blogs.title }}" type="text"/>
+                        <br/>
+                        <span>简介：</span>
+                                <textarea name="synopsis" class="form-control" >{{ blogs.synopsis }}</textarea>
+                        <label><span>分类：</span>
+                            <select name="classify">
+                                <optgroup label="">
+                                    <option value="">默认分类</option>
+                                </optgroup>
+                            </select>
+                        </label>
+                        <label><span>内容：</span></label>
+                            <script id="container" name="content" type="text/plain"></script>
+                         <textarea id="content" name="content"  style="width:800px;height:500px;">{{ blogs.content }}</textarea>
+			             <script type="text/javascript">
+			 	                var editor = new UE.ui.Editor();
+                                editor.render("content");
+                         </script>
+                            <!-- 加载编辑器的容器 -->
+                        <label><span>状态：</span>
+                            <select name="state">
+                                <optgroup label="">
+                                    <option value="0">草稿</option>
+                                    <option value="1">发布</option>
+                                </optgroup>
+                            </select>
+                        </label>
+                        <a class="btn btn-success" onclick="send()">提交</a>
+                        <a href="/blogs" class="btn btn-primary">返回</a>
                     </fieldset>
                 </form>
             </div>

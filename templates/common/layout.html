@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/static/common/directory.css"/>
     <link href="/static/bootcss/bootstrap-combined.min.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="/static/bootcss/bootstrap.min.js"></script>
+      <script type="text/javascript" src="/static/common/js/blogs.js"></script>
     <script type="text/javascript" src="/static/common/toTop.js"></script>
 </head>
 <body>
@@ -66,8 +67,8 @@
                             </ul>
                             <ul class="nav pull-right">
                                 <li class="divider-vertical">
-                                    {% if user %}
-                                    欢迎{{ user.username }}
+                                    {% if g.user %}
+                                    欢迎
                                     {% else %}
                                         {% include 'user/nav-login.html' %}
                                     {% endif %}

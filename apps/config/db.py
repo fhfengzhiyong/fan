@@ -5,4 +5,4 @@ from sqlalchemy import Column,String,create_engine,Integer,DATETIME
 from sqlalchemy.orm import sessionmaker
 engine = create_engine('mysql+mysqlconnector://root:1234@localhost:3306/fan',echo=True)
 #创建DBSession类型
-DBSession  = sessionmaker(bind=engine,autocommit= True)
+DBSession  = sessionmaker(bind=engine,expire_on_commit= False)

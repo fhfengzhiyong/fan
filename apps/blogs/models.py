@@ -17,5 +17,7 @@ class Blogs(Base):
     classify= Column(Integer)
     user_id = Column(String(36))
     create_date= Column(DATETIME)
-    state= Column(Integer())
+    state= Column(Integer)
+    views = Column(Integer,default=0)
+    praise = Column(Integer,default=0)
 

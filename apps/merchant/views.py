@@ -5,7 +5,6 @@ from jinja2 import TemplateNotFound
 merchant = Blueprint('merchant',__name__,template_folder='templates/merchant')
 from models import Merchant
 from apps.config.db import DBSession
-from sqlalchemy import String
 from form import addMerchantFrom
 import uuid
 @merchant.route('/merchant/')

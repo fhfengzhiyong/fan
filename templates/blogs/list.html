@@ -8,8 +8,8 @@
 
             <div class="post_item">
                 <div class="digg">
-                    <div class="diggit" onclick="DiggPost('index-html',4999897,83633,1)">
-                        <span class="diggnum" id="digg_count_4999897">42</span>
+                    <div class="diggit" onclick="praise('{{blogs.id }}')">
+                        <span class="diggnum"  id="{{ blogs.id }}">{{ blogs.praise }}</span>
                     </div>
                     <div class="clear"></div>
                     <div id="digg_tip_4999897" class="digg_tip"></div>
@@ -25,10 +25,23 @@
                     <div class="post_item_foot">
                         <a href="http://www.cnblogs.com/index-html/" class="lightblue">EtherDream</a>
                         发布于 2015-11-27 10:35
-    <span class="article_comment"><a href="http://www.cnblogs.com/index-html/p/4999897.html#commentform" title=""
-                                     class="gray">
-        评论(22)</a></span><span class="article_view"><a href="http://www.cnblogs.com/index-html/p/4999897.html"
-                                                       class="gray">阅读(4631)</a></span></div>
+                         <span class="article_comment">
+                            <a href="http://www.cnblogs.com/index-html/p/4999897.html#commentform" title="" class="gray">
+                                评论(22)
+                            </a>
+                                 <a href="/blogs/update?id={{blogs.id}}" title="" class="gray">
+                                    修改
+                                 </a>
+                                  <a href="/blogs/delete?id={{ blogs.id }}" title="" class="gray">
+                                     删除
+                                 </a>
+                         </span>
+                        <span class="article_view">
+                            <a href="http://www.cnblogs.com/index-html/p/4999897.html" class="gray">
+                                阅读({{ blogs.views }})
+                            </a>
+                        </span>
+                    </div>
                 </div>
                 <div class="clear"></div>
             </div>

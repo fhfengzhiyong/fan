@@ -80,6 +80,7 @@ def navlogin():
     if  user:
         print 123
         g.user = user
+        flash('登陆成功！')
         return redirect(location='/')
     flash('用户名或密码不正确!')
     return redirect(location='/')

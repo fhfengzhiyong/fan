@@ -13,16 +13,16 @@
         $('form').submit();
     }
     </script>
-    <div class="container ">
+    <div class="container-fluid  ">
         <div class="row-fluid">
-            <div class="span12">
+            <div class="span10">
                 <form action="add" id="form" class="bs-example bs-example-form" role="form" method="POST">
                     <fieldset>
                         <legend>写博客</legend>
-                        <span>标题：</span><input name="title" class="form-control" type="text"/>
+                        <span>标题：</span><input name="title"  style="height: 30px" type="text"/>
                         <br/>
                         <span>简介：</span>
-                                <textarea name="synopsis" class="form-control" ></textarea>
+                                <textarea name="synopsis" class="form-control " style="width: 1100px;height: 100px" ></textarea>
                         <label><span>分类：</span>
                             <select name="classify">
                                 <optgroup label="">
