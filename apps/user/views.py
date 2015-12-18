@@ -1,6 +1,6 @@
 #encoding=utf-8
 #author:straw
-from flask import render_template, flash, redirect,Blueprint,Flask,g
+from flask import render_template, flash, redirect,Blueprint,Flask,g,url_for
 from .form import LoginForm
 from flask import current_app,g,request
 from apps.config import db
@@ -8,11 +8,12 @@ from models import User
 from apps.utils import encrypt_password
 import os
 import apps.sdk.geetest as geetest
+from flask.ext.login import login_user,logout_user,login_required
 # index view function suppressed for brevity
 user = Blueprint('user',__name__,template_folder='templates/user')
 
 @user.route('/register', methods = ['GET', 'POST'])
-def login():
+def register():
     captcha_id = current_app.config.get('CAPTCHA_ID')
     private_key = current_app.config.get('PRIVATE_KEY')
     BASE_URL =  current_app.config.get('BASE_URL')
@@ -28,10 +29,8 @@ def login():
         if result:
             user = User()
             user.account = account
-            #user.password = encrypt_password(password)
             user.password = password
             session =  db.DBSession()
-            session.begin()
             session.add(user)
             session.commit()
             session.close()
@@ -83,4 +82,23 @@ def navlogin():
         flash('登陆成功！')
         return redirect(location='/',code=302)
     flash('用户名或密码不正确!')
+    return redirect(location='/')
+
+@user.route("/login", methods=["GET", "POST"])
+def login():
+    print 1111111111111111111111111
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(account=form.account.data).first()
+        if user is not None and user.verify_password(form.password.data):
+            login_user(user, form.remember_me.data)
+            return redirect(request.args.get('next') or url_for('index'))
+        flash('Invalid username or password.')
+    flash("Logged in successfully.")
+    return render_template('user/login.html', form=form)
+
+@user.route("/logout")
+@login_required
+def logout():
+    logout_user()
     return redirect(location='/')

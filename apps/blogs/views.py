@@ -4,6 +4,7 @@
 from flask import Blueprint,render_template,request,flash,redirect,jsonify,current_app
 from models import Blogs
 from apps.config.db import DBSession
+from flask.ext.login import login_required
 import uuid
 import string
 import unicodedata
@@ -12,6 +13,7 @@ from werkzeug  import security
 
 blogs = Blueprint('blogs',__name__,template_folder='templates/blogs')
 @blogs.route('/blogs',methods=['GET'])
+@login_required
 def index():
     session = DBSession()
     blogss = session.query(Blogs)
@@ -20,6 +22,7 @@ def index():
     return render_template('blogs/list.html',blogss=blogss)
 
 @blogs.route('/blogs/add',methods=['POST','GET'])
+@login_required
 def add():
     if request.method == 'GET':
         return render_template('blogs/add.html',id= uuid.uuid4().__str__())

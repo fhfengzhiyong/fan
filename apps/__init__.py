@@ -1,50 +1,61 @@
+
 #encoding=utf-8
-#author:straw
-#from flask import  Flask
-#app = Flask(__name__, instance_relative_config=True)
+import sys
+from flask import Flask,render_template,config,redirect
+from flask.ext.sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+reload(sys)
+sys.setdefaultencoding('utf8')
 
-# Load the default configuration
-#app.config.from_object('config.default')
+app = Flask(__name__)
+app.config.from_pyfile('../config/setting.py')
+db = SQLAlchemy(app)
+#db.engine = create_engine('mysql+mysqlconnector://root:1234@localhost:3306/fan',echo=True)
+#创建DBSession类型
+#db.DBSession  = sessionmaker(bind=engine,expire_on_commit= False)
 
-# Load the configuration from the instance folder
-#app.config.from_pyfile('config.py')
+from apps.merchant.views import merchant
+from apps.user.views import user
+from apps.blogs.views import blogs
+from apps.config.ue import config
+from apps.resource.views import resource
+from apps.online.views import online
+from flask import  blueprints
+from apps.utils import RegexConverter
+import re
+import os
+from social.apps.flask_app.routes import social_auth
+from social.apps.flask_app.default.models import init_social
+from apps.config.db import DBSession
+from flask import g
+from social.exceptions import SocialAuthBaseException
+from apps.system.views import indexpage
+from flask.ext.login import current_user,LoginManager
+from apps.user.models import User
 
-# Load the file specified by the APP_CONFIG_FILE environment variable
-# Variables defined here will override those in the default configuration
-#app.config.from_envvar('APP_CONFIG_FILE')
-# import os
-# from flask import Flask
-# from flask.ext.sqlalchemy import SQLAlchemy
-# from flask.ext.login import LoginManager
-# from flask.ext.openid import OpenID
-# from config.setting import basedir, ADMINS, MAIL_SERVER, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD
-#
-# app = Flask(__name__)
-# app.config.from_object('config')
-# db = SQLAlchemy(app)
-# lm = LoginManager()
-# lm.init_app(app)
-# lm.login_view = 'login'
-# oid = OpenID(app, os.path.join(basedir, 'tmp'))
-#
-# if not app.debug:
-#     import logging
-#     from logging.handlers import SMTPHandler
-#     credentials = None
-#     if MAIL_USERNAME or MAIL_PASSWORD:
-#         credentials = (MAIL_USERNAME, MAIL_PASSWORD)
-#     mail_handler = SMTPHandler((MAIL_SERVER, MAIL_PORT), 'no-reply@' + MAIL_SERVER, ADMINS, 'microblog failure', credentials)
-#     mail_handler.setLevel(logging.ERROR)
-#     app.logger.addHandler(mail_handler)
-#
-# if not app.debug:
-#     import logging
-#     from logging.handlers import RotatingFileHandler
-#     file_handler = RotatingFileHandler('tmp/microblog.log', 'a', 1 * 1024 * 1024, 10)
-#     file_handler.setLevel(logging.INFO)
-#     file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
-#     app.logger.addHandler(file_handler)
-#     app.logger.setLevel(logging.INFO)
-#     app.logger.info('microblog startup')
-# import apps
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+
+#用户登陆
+login_manager = LoginManager()
+login_manager.init_app(app)
+#设置登陆视图
+login_manager.login_view = "user.login"
+
+@login_manager.user_loader
+def load_user(userid):
+    print userid
+    return User.get(userid)
+
+app.register_blueprint(social_auth)
+app.register_blueprint(merchant)
+app.register_blueprint(user)
+app.register_blueprint(blogs)
+app.register_blueprint(indexpage)
+app.register_blueprint(resource)
+app.register_blueprint(online)
+app.url_map.converters['regex'] = RegexConverter
+app.register_blueprint(config)
+app.config['UPLOADED_FILE']=basedir+'/upload/'
 

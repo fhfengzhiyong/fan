@@ -14,15 +14,11 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 CSRF_ENABLED = True
 SECRET_KEY = 'you-will-never-guess'
 
-OPENID_PROVIDERS = [
-    { 'name': 'Google', 'url': 'https://www.google.com/accounts/o8/id' },
-    { 'name': 'Yahoo', 'url': 'https://me.yahoo.com' },
-    { 'name': 'AOL', 'url': 'http://openid.aol.com/<username>' },
-    { 'name': 'Flickr', 'url': 'http://www.flickr.com/<username>' },
-    { 'name': 'MyOpenID', 'url': 'https://www.myopenid.com' }]
-
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+#数据库设置
+SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://root:1234@localhost:3306/fan'
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
+SQLALCHEMY_TRACK_MODIFICATIONS = True
+SQLALCHEMY_ECHO = True #打印sql
 
 # mail server settings
 MAIL_SERVER = 'localhost'
@@ -40,22 +36,8 @@ BASE_URL = "api.geetest.com/get.php?gt="
 CAPTCHA_ID = "a40fd3b0d712165c5d13e6f747e948d4"
 PRIVATE_KEY = "0f1a37e33c9ed10dd2e133fe2ae9c459"
 
-OPENID_PROVIDERS = [
-    { 'name': 'Google', 'url': 'https://www.google.com/accounts/o8/id' },
-    { 'name': 'Yahoo', 'url': 'https://me.yahoo.com' },
-    { 'name': 'AOL', 'url': 'http://openid.aol.com/<username>' },
-    { 'name': 'Flickr', 'url': 'http://www.flickr.com/<username>' },
-    { 'name': 'MyOpenID', 'url': 'https://www.myopenid.com' }]
-SOCIAL_AUTH_TWITTER_KEY = 'foobar'
-SOCIAL_AUTH_TWITTER_SECRET = 'bazqux'
-SOCIAL_AUTH_AUTHENTICATION_BACKENDS = (
-    'social.backends.open_id.OpenIdAuth',
-    'social.backends.google.GoogleOpenId',
-    'social.backends.google.GoogleOAuth2',
-    'social.backends.google.GoogleOAuth',
-    'social.backends.twitter.TwitterOAuth',
-    'social.backends.yahoo.YahooOpenId',
-)
+
+
 SOCIAL_AUTH_TWITTER_LOGIN_URL='/sdfsd'
 SOCIAL_AUTH_LOGIN_URL='/login'
 LOGIN_URL='/login'
