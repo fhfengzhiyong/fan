@@ -1,5 +1,7 @@
 {% extends 'common/layout.html' %}
 {% block content %}
+    <script type="text/Javascript" src="/static/plupload/plupload.full.min.js"></script>
+    <script type="text/Javascript" src="/static/plupload/i18n/zh_CN.js"></script>
     <!-- 配置文件 -->
     <script type="text/javascript" src="/static/UEditor/ueditor.config.js"></script>
     <!-- 编辑器源码文件 -->
@@ -42,12 +44,94 @@
                                 </optgroup>
                             </select>
                         </label>
-
-                        <a class="btn btn-success" onclick="send()">提交</a>
-                        <a href="/blogs" class="btn btn-primary">返回</a>
                     </fieldset>
                 </form>
+                <table  class="form_table" style="margin-top:-10px;margin-left:15%;vertical-align:middle;">
+    		  <tr >
+					<td class="text" >上传资料：<span class="mandatory"></span></td>
+	                <td>
+	                   <button id="browse">选择文件</button>
+					   <button id="start_upload">开始上传</button><pre id="console" typeof=""></pre></td>
+
+            </tr>
+			<tr>
+				 <td  colspan="2" id="upfilelist" style="boder:1px;width:700px;" >
+					   <div  style="border:1px solid #000; height:120px; width:100%;overflow:auto;">
+						<div id="filelist"  >
+						 </div>
+                                    <li id="$!entity.serialno">$!entity.filename</a><input type="button" style="margin-left:50px;"  onclick="delFile('$!entity.serialno','xx')" value="删除" /><span  style="margin-left:50px;" >加密文件</span><input  type="checkbox" title="是否加密" id="CipheR_$!entity.serialno"  #if($!entity.res2==1) checked #end  onclick='isCipheR("$!entity.serialno")'/> </li>
+					   </div>
+	                 </td>
+	           </tr>
+    </table>
+                 <a class="btn btn-success" onclick="send()">提交</a>
+                        <a href="/blogs" class="btn btn-primary">返回</a>
             </div>
         </div>
     </div>
+<script>
+    var url = "/resource/upload?id=" + '{{ id }}';
+    var uploader = new plupload.Uploader({
+    browse_button: 'browse',
+    url: url,
+    file_data_name: 'file',
+    unique_names: false,
+    flash_swf_url: 'js/plupload/Moxie.swf',
+    silverlight_xap_url: 'js/plupload/Moxie.xap',
+    filters: {
+        max_file_size: '20mb',
+        mime_types: [{
+            title: "all files",
+            extensions: "*"
+        }, {
+            title: "text",
+            extensions: "doc,pdf,xls,xlsx,docx,wpt,txt,ppt"
+        }, {
+            title: "picture",
+            extensions: "bmp,gif,jpg,pic,png,tif"
+        }, {
+            title: "Zip",
+            extensions: "zip,rar"
+        }, {
+            title: "voice",
+            extensions: "c,asm,for,lib,lst,msg,obj,pas,wki,bas"
+        }]
+    },
+    multipart_params: {
+        'key': 'aaa',
+        'filename': 'aaa'
+    },
+    init: {
+        PostInit: function() {
+            document.getElementById('filelist').innerHTML = '';
+            //  document.getElementById('uploadfiles').onclick = function() {
+            //      uploader.start();
+            return false;
+            //  };
+        },
+
+        FilesAdded: function(up, files) {
+            plupload.each(files, function(file) {
+                document.getElementById('filelist').innerHTML += '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ')<b></b></div>';
+            });
+        },
+        UploadProgress: function(up, file) {
+            document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+        },
+        Error: function(up, err) {
+            document.getElementById('console').innerHTML += "\nError #" + err.code + ": " + err.message;
+        },
+        FileUploaded: function(uploader, file, responseObject) {
+            document.getElementById(file.id).getElementsByTagName('span')[0].innerHTML = '<input type="button" style="margin-left:50px;" onclick=delFile(' + responseObject.response + ',"' + file.id + '' + '") value="删除" /><span  style="margin-left:50px;" >加密文件</span><input id="xxx' + file.id + '" onclick=isCipheR(' + responseObject.response + ',"xxx' + file.id + '' + '")  type="checkbox"  />';
+            //$("#xxx"+file.id).attr("onchange","isCipheR("+responseObject.response+")");//onchange='isCipheR("$!entity.serialno")'
+        }
+    }
+});
+uploader.init();
+uploader.bind('FilesAdded', function(uploader, files) {});
+uploader.bind('UploadProgress', function(uploader, file) {});
+document.getElementById('start_upload').onclick = function() {
+    uploader.start();
+}
+</script>
 {% endblock %}

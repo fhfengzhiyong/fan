@@ -4,6 +4,7 @@
 #现状
 分页、认证未实现。
 #安装
+使用myslq 创建fan数据库。 转储fan.sql 文件。
 virtualenv env
 env\Scripts\activate
 pip install -r requirements.txt

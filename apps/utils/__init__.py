@@ -33,3 +33,10 @@ def encrypt_password(password, salt=None):
         result = HMAC(result, salt, sha256).digest()
 
     return result
+
+
+def getFileExt(path):
+    ext = os.path.splitext(path)[1][1:].lower()
+    if ext == 'lnk' and os.path.isfile(path):
+        return None
+    return ext

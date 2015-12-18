@@ -5,16 +5,19 @@ from apps.merchant.views import merchant
 from apps.user.views import user
 from apps.blogs.views import blogs
 from apps.config.ue import config
+from apps.resource.views import resource
+from apps.online.views import online
 from flask import  blueprints
 from apps.utils import RegexConverter
 import re
+import os
 from social.apps.flask_app.routes import social_auth
 from social.apps.flask_app.default.models import init_social
 from apps.config.db import DBSession
 from flask import g
 from social.exceptions import SocialAuthBaseException
 from apps.sys.views import indexpage
-
+basedir = os.path.abspath(os.path.dirname(__file__))
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -28,8 +31,11 @@ app.register_blueprint(merchant)
 app.register_blueprint(user)
 app.register_blueprint(blogs)
 app.register_blueprint(indexpage)
+app.register_blueprint(resource)
+app.register_blueprint(online)
 app.url_map.converters['regex'] = RegexConverter
 app.register_blueprint(config)
+app.config['UPLOADED_FILE']=basedir+'/upload/'
 if __name__ == ('__main__'):
 
     init_social(app, DBSession())
@@ -38,7 +44,7 @@ if __name__ == ('__main__'):
 
 @app.before_request
 def global_user():
-    print 123
+    print 555555555555555555555555555555555555555555555555555555555555555555
    # g.user = get_current_logged_in_user
     g.user = 'xoapwi'
 

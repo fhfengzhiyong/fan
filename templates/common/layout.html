@@ -38,6 +38,9 @@
                                 <li>
                                     <a href="/blogs">博客</a>
                                 </li>
+                                <li>
+                                    <a href="/online">在线视频</a>
+                                </li>
                                 <li class="dropdown">
                                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">更多<strong
                                             class="caret"></strong></a>
@@ -68,7 +71,7 @@
                             <ul class="nav pull-right">
                                 <li class="divider-vertical">
                                     {% if g.user %}
-                                    欢迎
+                                    <a href="#">欢迎 {{ g.user.username }}</a>
                                     {% else %}
                                         {% include 'user/nav-login.html' %}
                                     {% endif %}

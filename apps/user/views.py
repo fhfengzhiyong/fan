@@ -1,6 +1,6 @@
 #encoding=utf-8
 #author:straw
-from flask import render_template, flash, redirect,Blueprint,Flask
+from flask import render_template, flash, redirect,Blueprint,Flask,g
 from .form import LoginForm
 from flask import current_app,g,request
 from apps.config import db
@@ -78,9 +78,9 @@ def navlogin():
     user= session.query(User).filter_by(account=account,password =password ).first()
     session.close()
     if  user:
-        print 123
+        setattr(g,'user',user)
         g.user = user
         flash('登陆成功！')
-        return redirect(location='/')
+        return redirect(location='/',code=302)
     flash('用户名或密码不正确!')
     return redirect(location='/')

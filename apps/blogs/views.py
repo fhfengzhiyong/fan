@@ -1,13 +1,14 @@
 # -*- coding:utf8 -*-
 #encoding = utf-8
 #author:straw
-from flask import Blueprint,render_template,request,flash,redirect,jsonify
+from flask import Blueprint,render_template,request,flash,redirect,jsonify,current_app
 from models import Blogs
 from apps.config.db import DBSession
 import uuid
 import string
 import unicodedata
 from apps.utils import decodeHtml
+from werkzeug  import security
 
 blogs = Blueprint('blogs',__name__,template_folder='templates/blogs')
 @blogs.route('/blogs',methods=['GET'])
@@ -21,7 +22,7 @@ def index():
 @blogs.route('/blogs/add',methods=['POST','GET'])
 def add():
     if request.method == 'GET':
-        return render_template('blogs/add.html')
+        return render_template('blogs/add.html',id= uuid.uuid4().__str__())
     form = request.form
     blogs = Blogs()
     blogs.title = form.get('title')
@@ -89,6 +90,8 @@ def praise():
     session.commit()
     session.close()
     return jsonify(code=0,praise =blogs.praise )
+
+
 
 
 

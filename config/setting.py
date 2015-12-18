@@ -1,10 +1,40 @@
 #encoding=utf-8
+import os
+
 DEBUG = False
 SYS_NAME = '基础平台系统'
 CSRF_ENABLED = True #激活 跨站点请求伪造 
 SECRET_KEY = '5186225'
 APP_CONFIG_FILE='/config/production.py'
 #SERVER_NAME='127.0.0.1:8000'
+
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+CSRF_ENABLED = True
+SECRET_KEY = 'you-will-never-guess'
+
+OPENID_PROVIDERS = [
+    { 'name': 'Google', 'url': 'https://www.google.com/accounts/o8/id' },
+    { 'name': 'Yahoo', 'url': 'https://me.yahoo.com' },
+    { 'name': 'AOL', 'url': 'http://openid.aol.com/<username>' },
+    { 'name': 'Flickr', 'url': 'http://www.flickr.com/<username>' },
+    { 'name': 'MyOpenID', 'url': 'https://www.myopenid.com' }]
+
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
+
+# mail server settings
+MAIL_SERVER = 'localhost'
+MAIL_PORT = 25
+MAIL_USERNAME = None
+MAIL_PASSWORD = None
+
+# administrator list
+ADMINS = ['you@example.com']
+
+# pagination
+POSTS_PER_PAGE = 3
 
 BASE_URL = "api.geetest.com/get.php?gt="
 CAPTCHA_ID = "a40fd3b0d712165c5d13e6f747e948d4"
@@ -48,3 +78,5 @@ SOCIAL_AUTH_SLUGIFY_USERNAMES = False
 SOCIAL_AUTH_CLEAN_USERNAMES = True
 SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['keep']
 SOCIAL_AUTH_REMEMBER_SESSION_NAME = 'remember_me'
+
+
