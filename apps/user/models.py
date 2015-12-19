@@ -21,6 +21,7 @@ class User(db.Model):
     password_format= Column(Integer)
     state = Column(Integer)
     icon= Column(String(200))
+    last_seen = db.Column(db.DateTime)
     play_image= Column(Integer())
     @property
     def password(self):
@@ -51,6 +52,6 @@ class User(db.Model):
         return '<User %r>' % (self.username)
     @classmethod
     def get(self,id):
-        User.query.filter_by(id=id).first()
+        return User.query.filter_by(id=id).first()
 
 

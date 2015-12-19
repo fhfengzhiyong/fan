@@ -6,8 +6,8 @@ import uuid
 from apps.base import *
 #创建对象的基类
 Base = declarative_base()
-
-class Blogs(Base):
+from apps import db
+class Blogs(db.Model):
     ISOTIMEFORMAT='%Y-%m-%d %X'
     #表名
     __tablename__= 'blogs'

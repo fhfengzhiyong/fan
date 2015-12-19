@@ -1,6 +1,8 @@
 {% extends 'blogs/index.html' %}
 {% block blogsindex %}
-    <div class="container-fluid blogs-list-body">
+    {% set pageurl='/blogs'  %}
+    {% set endpoint = 'index' %}
+    <div class="container-fluid blogs-list-body" xmlns="http://www.w3.org/1999/html">
         <div class="btn-group">
             <a class="btn" href="blogs/add">写博客</a>
         </div>
@@ -17,30 +19,26 @@
                 <div class="post_item_body">
                     <h3><a class="titlelnk" href="/blogs/content?id={{ blogs.id }}"
                            target=" _blank">{{ blogs.title }}</a></h3>
-
                     <p class="post_item_summary">
                         {{ blogs.synopsis }}
                     </p>
-
                     <div class="post_item_foot">
-                        <a href="http://www.cnblogs.com/index-html/" class="lightblue">EtherDream</a>
-                        发布于 2015-11-27 10:35
-                         <span class="article_comment">
-                            <a href="http://www.cnblogs.com/index-html/p/4999897.html#commentform" title="" class="gray">
-                                评论(22)
-                            </a>
-                                 <a href="/blogs/update?id={{blogs.id}}" title="" class="gray">
+                        <a href="http://www.cnblogs.com/index-html/" class="lightblue">{{ (blogs.user_id|getUserNamebyId).account }}</a>
+                        <span >
+                            发布于 {{ blogs.create_date|strftime('%Y 年 %m 月 %d 日') }}阅读({{ blogs.views }})评论(22)
+                        </span>
+                        <span class="lightblue">
+                             {% if g.user.id==blogs.user_id %}
+                            <a href="/blogs/update?id={{blogs.id}}" title="" class="lightblue">
                                     修改
-                                 </a>
-                                  <a href="/blogs/delete?id={{ blogs.id }}" title="" class="gray">
-                                     删除
-                                 </a>
-                         </span>
-                        <span class="article_view">
-                            <a href="http://www.cnblogs.com/index-html/p/4999897.html" class="gray">
-                                阅读({{ blogs.views }})
                             </a>
                         </span>
+                        <span class="lightblue">
+                             <a href="/blogs/delete?id={{ blogs.id }}" title="" class="lightblue">
+                                     删除
+                             </a>
+                             {% endif %}
+                         </span>
                     </div>
                 </div>
                 <div class="clear"></div>

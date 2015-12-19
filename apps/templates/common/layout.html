@@ -70,8 +70,8 @@
                             </ul>
                             <ul class="nav pull-right">
                                 <li class="divider-vertical">
-                                    {% if g.user.is_authenticated %}
-                                        <a href="#">欢迎 {{ user.account }}</a>
+                                    {% if g.user.id  %}
+                                        <a href="#">欢迎 {{ g.user.account }}</a>
                                     {% else %}
                                         {% include 'user/nav-login.html' %}
                                     {% endif %}
@@ -92,7 +92,9 @@
                                         <li class="divider">
                                         </li>
                                         <li>
-                                            <a href="logout">退出</a>
+                                            {% if g.user.id  %}
+                                            <a href="/logout">退出</a>
+                                            {% endif %}
                                         </li>
                                     </ul>
                                 </li>

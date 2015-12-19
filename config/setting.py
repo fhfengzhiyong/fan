@@ -20,6 +20,13 @@ SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 SQLALCHEMY_ECHO = True #打印sql
 
+
+#国际化
+# available languages
+LANGUAGES = {
+    'en': 'English',
+    'es': 'Español'
+}
 # mail server settings
 MAIL_SERVER = 'localhost'
 MAIL_PORT = 25
@@ -30,8 +37,7 @@ MAIL_PASSWORD = None
 ADMINS = ['you@example.com']
 
 # pagination
-POSTS_PER_PAGE = 3
-
+POSTS_PER_PAGE = 3 #分页条数
 BASE_URL = "api.geetest.com/get.php?gt="
 CAPTCHA_ID = "a40fd3b0d712165c5d13e6f747e948d4"
 PRIVATE_KEY = "0f1a37e33c9ed10dd2e133fe2ae9c459"

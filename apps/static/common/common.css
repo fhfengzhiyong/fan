@@ -80,3 +80,29 @@ body {
     margin-bottom: 15px;
     padding-bottom: 15px;
 }
+/*分页样式*/
+.s8-pagination {
+  position: absolute;
+  top: 10px;
+  right: 0;
+}
+
+.s8-pagination a.active,
+.s8-pagination a .s8-page-go span {
+  background: #0088cc;
+  color: #fff;
+}
+.s8-pagination a.s8-pre-page,
+.s8-pagination a.s8-next-page {
+  background: none;
+  border: none;
+  color: #111;
+}
+.s8-pagination a .s8-page {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+}

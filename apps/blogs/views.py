@@ -1,7 +1,7 @@
 # -*- coding:utf8 -*-
 #encoding = utf-8
 #author:straw
-from flask import Blueprint,render_template,request,flash,redirect,jsonify,current_app
+from flask import Blueprint,render_template,request,flash,redirect,jsonify,current_app,g
 from models import Blogs
 from apps.config.db import DBSession
 from flask.ext.login import login_required
@@ -10,16 +10,16 @@ import string
 import unicodedata
 from apps.utils import decodeHtml
 from werkzeug  import security
-
+from apps import db
 blogs = Blueprint('blogs',__name__,template_folder='templates/blogs')
+@blogs.route('/blogs/<int:page>')
 @blogs.route('/blogs',methods=['GET'])
-@login_required
-def index():
-    session = DBSession()
-    blogss = session.query(Blogs)
-    session.commit()
-    session.close()
-    return render_template('blogs/list.html',blogss=blogss)
+def index(page=1):
+    #blogss = session.query(Blogs)
+    print current_app.config['POSTS_PER_PAGE']
+    pagination = Blogs.query.order_by(db.desc(Blogs.create_date)).paginate(page, current_app.config['POSTS_PER_PAGE'], False)
+    blogss = pagination.items
+    return render_template('blogs/list.html',blogss=blogss,pagination=pagination)
 
 @blogs.route('/blogs/add',methods=['POST','GET'])
 @login_required
@@ -33,7 +33,7 @@ def add():
     blogs.synopsis = form.get('synopsis')
     blogs.classify = form.get('classify')
     blogs.state = form.get('state')
-    blogs.user_id = form.get('user_id')
+    blogs.user_id = g.user.id
     session = DBSession()
     session.add(blogs)
     session.commit()
@@ -53,7 +53,6 @@ def delete():
 
 @blogs.route('/blogs/update',methods=['POST','GET'])
 def update():
-    print 123
     if request.method=='GET':
         id = request.args['id']
         blogs = DBSession().query(Blogs).filter_by(id=id).first()

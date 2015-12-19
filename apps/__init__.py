@@ -1,7 +1,7 @@
 
 #encoding=utf-8
 import sys
-from flask import Flask,render_template,config,redirect
+from flask import Flask,render_template,config,redirect,request
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -14,7 +14,7 @@ db = SQLAlchemy(app)
 #db.engine = create_engine('mysql+mysqlconnector://root:1234@localhost:3306/fan',echo=True)
 #创建DBSession类型
 #db.DBSession  = sessionmaker(bind=engine,expire_on_commit= False)
-
+from flask.ext.babel import Babel, lazy_gettext
 from apps.merchant.views import merchant
 from apps.user.views import user
 from apps.blogs.views import blogs
@@ -33,7 +33,8 @@ from social.exceptions import SocialAuthBaseException
 from apps.system.views import indexpage
 from flask.ext.login import current_user,LoginManager
 from apps.user.models import User
-
+from datetime import datetime
+from system import *
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -51,11 +52,17 @@ login_manager.login_message = u"该页面需要登陆！"
 #     return User.get(userid)
 @login_manager.user_loader
 def load_user(id):
-    user = User.query.filter_by(id=id).first()
-    print user.account
-    return user
+    return User.get(id)
 
-
+@app.before_request
+def before_request():
+    g.user = current_user
+    if g.user.is_authenticated:
+        g.user.last_seen = datetime.utcnow()
+        db.session.add(g.user)
+        db.session.commit()
+        #g.search_form = SearchForm()
+    g.locale = get_locale()
 app.register_blueprint(social_auth)
 app.register_blueprint(merchant)
 app.register_blueprint(user)
@@ -66,4 +73,15 @@ app.register_blueprint(online)
 app.url_map.converters['regex'] = RegexConverter
 app.register_blueprint(config)
 app.config['UPLOADED_FILE']=basedir+'/upload/'
+LANGUAGES = app.config['LANGUAGES']
+#国际化
+babel = Babel(app)
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(LANGUAGES.keys()) or 'en'
+
+
+env = app.jinja_env
+env.filters['strftime'] = strftime
+env.filters['getUserNamebyId'] = getUserNamebyId
 
