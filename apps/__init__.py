@@ -40,13 +40,21 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 #用户登陆
 login_manager = LoginManager()
 login_manager.init_app(app)
-#设置登陆视图
+#设置登陆视图请求方法
 login_manager.login_view = "user.login"
+#设置需要登陆提示
+login_manager.login_message = u"该页面需要登陆！"
 
+# @login_manager.user_loader
+# def load_user(userid):
+#     print userid
+#     return User.get(userid)
 @login_manager.user_loader
-def load_user(userid):
-    print userid
-    return User.get(userid)
+def load_user(id):
+    user = User.query.filter_by(id=id).first()
+    print user.account
+    return user
+
 
 app.register_blueprint(social_auth)
 app.register_blueprint(merchant)

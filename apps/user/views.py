@@ -67,6 +67,7 @@ def register():
 @user.route('/socialerror')
 def socialerror():
     return render_template('/')
+
 @user.route('/navlogin',methods=['POST'])
 def navlogin():
     form = request.form
@@ -74,19 +75,17 @@ def navlogin():
     password = form.get('password')
     session = db.DBSession()
     encrypt_password(password)
-    user= session.query(User).filter_by(account=account,password =password ).first()
-    session.close()
-    if  user:
-        setattr(g,'user',user)
-        g.user = user
+    print account
+    user = User.query.filter_by(account=account).first()
+    if user is not None and user.verify_password(password):
+        login_user(user)
         flash('登陆成功！')
-        return redirect(location='/',code=302)
+        return redirect(location='/')
     flash('用户名或密码不正确!')
     return redirect(location='/')
 
 @user.route("/login", methods=["GET", "POST"])
 def login():
-    print 1111111111111111111111111
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(account=form.account.data).first()

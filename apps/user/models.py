@@ -9,7 +9,7 @@ from flask.ext.login import  UserMixin
 Base = declarative_base()
 from apps import db
 
-class User(db.Model,UserMixin):
+class User(db.Model):
     #表名
     __tablename__= 'user'
     #表的结构
@@ -34,6 +34,7 @@ class User(db.Model,UserMixin):
 
     def __repr__(self):
         return '<User %r>' % self.username
+        # 新增下面四個 function
     def is_authenticated(self):
         return True
 
