@@ -18,7 +18,7 @@ recource = Blueprint('recource',__name__,template_folder='/templates')
 @recource.route('/recource')
 @login_required
 def resourceList():
-    resourcelist =Recource.query.all()
+    resourcelist = Recource.getList().show()
     return render_template('/system/recource/index.html',resourcelist = resourcelist)
 
 @recource.route('/recource/add',methods=['POST','GET'])
@@ -38,7 +38,7 @@ def resourceadd():
     db.session.flush()
     db.session.commit()
     flash('增加成功！')
-    resourcelist =Recource.query.all()
+    resourcelist =Recource.getList().show()
     return render_template('/system/recource/index.html',resourcelist = resourcelist)
 
 @recource.route('/recource/update',methods=['POST','GET'])
@@ -58,5 +58,5 @@ def resourceupdate():
     recource.url = form.get('url')
     db.session.commit()
     flash('修改成功！')
-    resourcelist =Recource.query.all()
+    resourcelist =Recource.getList().show()
     return render_template('/system/recource/index.html',resourcelist = resourcelist)

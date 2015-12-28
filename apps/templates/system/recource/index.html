@@ -26,7 +26,8 @@
 					</tr>
 				</thead>
 				<tbody>
-                    {% for entity in resourcelist %}
+                    {% for li in resourcelist %}
+                        {% set entity= li.tag %}
 					<tr data-tt-id="{{ entity.id }}" {% if entity.parentId%} data-tt-parent-id="{{ entity.parentId }}" {% endif %}>
 						<td>
 							{{ entity.name }}

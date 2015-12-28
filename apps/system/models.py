@@ -2,6 +2,7 @@
 #author:straw
 from apps import db
 import uuid
+from apps.utils.treelibu.tree import Tree,Node
 
 class Recource(db.Model):
     __tablename__='os_resource'
@@ -17,11 +18,7 @@ class Recource(db.Model):
     @classmethod
     def getList(self):
         list = Recource.query.all()
-        list1 = list
-        new_list = []
-        for i in range(5):
-            for li in list1:
-                if li.depth==i:
-                    new_list.append(li)
-                    list1.remove(li)
-        return new_list
+        tree = Tree()
+        for li in list:
+            tree.create_node(li,li.id,parent=li.parentId)
+        return tree

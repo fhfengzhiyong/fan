@@ -3,3 +3,4 @@ python-social-auth==0.2.13
 sqlalchemy
 flask_wtf
 wtforms
+treelib
