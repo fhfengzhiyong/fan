@@ -101,3 +101,7 @@ def login():
 def logout():
     logout_user()
     return redirect(location='/')
+@user.route('/user/setting',methods=['GET'])
+@login_required
+def ucsetting():
+    return  render_template('uccenter/cucenter.html')

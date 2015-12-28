@@ -5,41 +5,25 @@
             <ul class="panel_body profile">
                 <div id="blog_userface">
                     <a href="http://my.csdn.net/oonets334" target="_blank">
-                        <img src="http://avatar.csdn.net/9/9/A/1_oonets334.jpg" title="访问我的空间" style="max-width:90%"/>
+                        <img src="http://avatar.csdn.net/9/9/A/1_oonets334.jpg" style="max-width:90%"/>
                     </a>
                     <br/>
-                    <span><a href="http://my.csdn.net/oonets334" class="user_name" target="_blank">oonets334</a></span>
+                    <span><a href="http://my.csdn.net/oonets334" class="user_name" target="_blank">{{ g.user.account }}</a></span>
                 </div>
                 <div class="interact">
-
-                    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
-
-                    <a href="javascript:void(0);" class="letter" title="[发私信]"
-                       onclick="window.open('http://msg.csdn.net/letters/model?receiver=oonets334','_blank','height=350,width=700');_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_sixin'])"></a>
                 </div>
                 <div id="blog_medal">
                     <div id="bms_box">
                     </div>
                 </div>
                 <ul id="blog_rank">
-                    <li>访问：<span>35113次</span></li>
-                    <li>积分：<span>482</span></li>
-                    <li>等级： <span style="position:relative;display:inline-block;z-index:1">
-            <img src="http://c.csdnimg.cn/jifen/images/xunzhang/jianzhang/blog2.png" alt=""
-                 style="vertical-align: middle;" id="leveImg">
             <div id="smallTittle"
                  style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
                 <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
-                积分：482
             </div>
         </span></li>
-                    <li>排名：<span>千里之外</span></li>
                 </ul>
                 <ul id="blog_statistics">
-                    <li>原创：<span>8篇</span></li>
-                    <li>转载：<span>10篇</span></li>
-                    <li>译文：<span>0篇</span></li>
-                    <li>评论：<span>3条</span></li>
                 </ul>
             </ul>
             <ul>
@@ -66,30 +50,11 @@
         <div id="panel_Category" class="panel">
             <ul class="panel_head"><span>文章分类</span></ul>
             <ul class="panel_body">
+                {% for articletype in articletypecount %}
                 <li>
-                    <a href="/oonets334/article/category/1090342"
-                       onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Python</a><span>(9)</span>
+                    <a href="">{{ articletype[0] }}</a><span>({{ articletype[1] }})</span>
                 </li>
-                <li>
-                    <a href="/oonets334/article/category/1090344"
-                       onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Tomcat</a><span>(5)</span>
-                </li>
-                <li>
-                    <a href="/oonets334/article/category/1096294"
-                       onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">杂</a><span>(1)</span>
-                </li>
-                <li>
-                    <a href="/oonets334/article/category/1111024"
-                       onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Xml</a><span>(1)</span>
-                </li>
-                <li>
-                    <a href="/oonets334/article/category/1090341"
-                       onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">数据库</a><span>(0)</span>
-                </li>
-                <li>
-                    <a href="/oonets334/article/category/1161549"
-                       onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Django</a><span>(1)</span>
-                </li>
+                {% endfor %}
             </ul>
         </div>
     </div>

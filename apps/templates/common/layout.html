@@ -6,7 +6,7 @@
     {#    <link rel="stylesheet" type="text/css" href="/static/common/rollpage.css"/>#}
     <link rel="stylesheet" type="text/css" href="/static/common/blogs.css"/>
     <link rel="stylesheet" type="text/css" href="/static/common/directory.css"/>
-    <link href="/static/bootcss/bootstrap-combined.min.css" rel="stylesheet" media="screen">
+     <link href="/static/bootcss/bootstrap-combined.min.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="/static/bootcss/bootstrap.min.js"></script>
       <script type="text/javascript" src="/static/common/js/blogs.js"></script>
     <script type="text/javascript" src="/static/common/toTop.js"></script>
@@ -46,9 +46,6 @@
                                             class="caret"></strong></a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a href="#">下拉导航1</a>
-                                        </li>
-                                        <li>
                                             <a href="#">下拉导航2</a>
                                         </li>
                                         <li>
@@ -71,7 +68,7 @@
                             <ul class="nav pull-right">
                                 <li class="divider-vertical">
                                     {% if g.user.id  %}
-                                        <a href="#">欢迎 {{ g.user.account }}</a>
+                                        <a href="/user/setting">欢迎 {{ g.user.account }}</a>
                                     {% else %}
                                         {% include 'user/nav-login.html' %}
                                     {% endif %}
@@ -80,8 +77,8 @@
                                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">个人中心<strong
                                             class="caret"></strong></a>
                                     <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="#">下拉导航1</a>
+                                         <li>
+                                            <a href="/user/setting">设置</a>
                                         </li>
                                         <li>
                                             <a href="#">下拉导航2</a>
@@ -112,9 +109,11 @@
         <strong></strong>{{ get_flashed_messages()[0] }}
     </div>
 {% endif %}
+    <div class="wrapper">
 {% block content %}
 {% endblock %}
-<div class="copyright ">
+   </div>
+<div class="copyright footer">
     <div class="container">
         <div class="row">
             <div class="col-sm-16">

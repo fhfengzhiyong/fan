@@ -34,13 +34,18 @@
     </ul>
     <ul>
         <li>
-            <a href="{{ pageurl }}/{{ pagination.max_num }}">末页</a>
+              <a href="#"><span>共{{ pagination.total }}条</span></a>
         </li>
+    </ul>
+{#    <ul>#}
+{#        <li>#}
+{#            <a href="{{ pageurl }}/{{ pagination.total }}">末页</a>#}
+{#        </li>#}
     </ul>
     <ul>
         <ul>
             <li>
-                <a href="#">/ {{ pagination.page }}</a>
+                <a href="#">/ {{ pagination.total }}</a>
             </li>
         </ul>
         <li>
@@ -49,7 +54,7 @@
     </ul>
     <ul>
         <li>
-            <a href="#" class="s8-page-go clearfix" max_page="{{ pagination.max_num }}"
+            <a href="#" class="s8-page-go clearfix" max_page="{{ pagination.page }}"
                current_page="1"><span>Go</span></a>
         </li>
     </ul>

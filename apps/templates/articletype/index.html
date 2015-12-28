@@ -1,0 +1,47 @@
+{% extends 'common/iframe.html' %}
+{% block iframe %}
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+            <a href="/articletype/add" class="btn btn-default btn-small">增加</a>
+			<table class="table table-condensed table-bordered">
+				<thead>
+					<tr>
+						<th>
+							编号
+						</th>
+						<th>
+							名称
+						</th>
+						<th>
+							描述
+						</th>
+						<th>
+							操作
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+                    {% for articletype in articletypelist %}
+					<tr>
+						<td>
+							{{ loop.index }}
+						</td>
+						<td>
+							{{ articletype.name }}
+						</td>
+						<td>
+							{{ articletype.describe }}
+						</td>
+						<td>
+							<a href="/articletype/update?id={{ articletype.id }}">修改</a>
+                            <a href="/articletype/delete?id={{ articletype.id }}">删除</a>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}

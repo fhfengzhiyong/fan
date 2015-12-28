@@ -15,60 +15,55 @@
         $('form').submit();
     }
     </script>
-    <div class="container-fluid  ">
-        <div class="row-fluid">
-            <div class="span10">
-                <form action="add" id="form" class="bs-example bs-example-form" role="form" method="POST">
-                    <fieldset>
-                        <legend>写博客</legend>
-                        <span>标题：</span><input name="title"  style="height: 30px" type="text"/>
-                        <br/>
-                        <span>简介：</span>
-                                <textarea name="synopsis" class="form-control " style="width: 1100px;height: 100px" ></textarea>
-                        <label><span>分类：</span>
-                            <select name="classify">
-                                <optgroup label="">
-                                    <option value="">默认分类</option>
-                                </optgroup>
-                            </select>
-                        </label>
-                        <label><span>内容：</span></label>
-                          <input type="hidden" name="content" id="content">
-                            <script id="container" name="content" type="text/plain"></script>
-                            <!-- 加载编辑器的容器 -->
-                        <label><span>状态：</span>
-                            <select name="state">
-                                <optgroup label="">
-                                    <option value="0">草稿</option>
-                                    <option value="1">发布</option>
-                                </optgroup>
-                            </select>
-                        </label>
-                    </fieldset>
-                </form>
-                <table  class="form_table" style="margin-top:-10px;margin-left:15%;vertical-align:middle;">
-    		  <tr >
-					<td class="text" >上传资料：<span class="mandatory"></span></td>
-	                <td>
-	                   <button id="browse">选择文件</button>
-					   <button id="start_upload">开始上传</button><pre id="console" typeof=""></pre></td>
-
-            </tr>
-			<tr>
-				 <td  colspan="2" id="upfilelist" style="boder:1px;width:700px;" >
-					   <div  style="border:1px solid #000; height:120px; width:100%;overflow:auto;">
-						<div id="filelist"  >
-						 </div>
-                                    <li id="$!entity.serialno">$!entity.filename</a><input type="button" style="margin-left:50px;"  onclick="delFile('$!entity.serialno','xx')" value="删除" /><span  style="margin-left:50px;" >加密文件</span><input  type="checkbox" title="是否加密" id="CipheR_$!entity.serialno"  #if($!entity.res2==1) checked #end  onclick='isCipheR("$!entity.serialno")'/> </li>
-					   </div>
-	                 </td>
-	           </tr>
-    </table>
-                 <a class="btn btn-success" onclick="send()">提交</a>
-                        <a href="/blogs" class="btn btn-primary">返回</a>
+<div class="container-fluid  ">
+    <div class="row-fluid">
+        <div class="span2">
+        </div>
+        <div class="span9">
+            <form action="add" id="form" class="bs-example bs-example-form" role="form" method="POST">
+                <fieldset>
+                    <legend>写博客</legend>
+                    <span>标题：</span>
+                    <input name="title" style="height: 30px" type="text" />
+                    <br/>
+                    <span>简介：</span>
+                    <textarea name="synopsis" class="form-control "></textarea>
+                    <label><span>分类：</span>
+                        <select name="classify">
+                            <optgroup label="">
+                                {% for article in articlelist %}
+                                <option value="{{ article.id }}">{{ article.name }}</option>
+                                {% endfor %}
+                            </optgroup>
+                        </select>
+                    </label>
+                    <label><span>内容：</span></label>
+                    <input type="hidden" name="content" id="content">
+                    <script id="container" name="content" type="text/plain"></script>
+                    <!-- 加载编辑器的容器 -->
+                    <label><span>状态：</span>
+                        <select name="state">
+                            <optgroup label="">
+                                <option value="0">草稿</option>
+                                <option value="1">发布</option>
+                            </optgroup>
+                        </select>
+                    </label>
+                </fieldset>
+            </form>
+            <button id="browse">选择文件</button>
+            <button id="start_upload">开始上传</button><span id="console" typeof=""></span>
+            <div id="upfilelist">
+                <div id="filelist" style="margin-bottom: 30px;">
+                </div>
+                <a class="btn btn-success" onclick="send()">提交</a>
+                <a href="/blogs" class="btn btn-primary">返回</a>
             </div>
         </div>
+        <div class="span1"></div>
     </div>
+</div>
+
 <script>
     var url = "/resource/upload?id=" + '{{ id }}';
     var uploader = new plupload.Uploader({
@@ -122,7 +117,7 @@
             document.getElementById('console').innerHTML += "\nError #" + err.code + ": " + err.message;
         },
         FileUploaded: function(uploader, file, responseObject) {
-            document.getElementById(file.id).getElementsByTagName('span')[0].innerHTML = '<input type="button" style="margin-left:50px;" onclick=delFile(' + responseObject.response + ',"' + file.id + '' + '") value="删除" /><span  style="margin-left:50px;" >加密文件</span><input id="xxx' + file.id + '" onclick=isCipheR(' + responseObject.response + ',"xxx' + file.id + '' + '")  type="checkbox"  />';
+            //document.getElementById(file.id).getElementsByTagName('span')[0].innerHTML = '<input type="button" style="margin-left:50px;" onclick=delFile(' + responseObject.response + ',"' + file.id + '' + '") value="删除" /><span  style="margin-left:50px;" >加密文件</span><input id="xxx' + file.id + '" onclick=isCipheR(' + responseObject.response + ',"xxx' + file.id + '' + '")  type="checkbox"  />';
             //$("#xxx"+file.id).attr("onchange","isCipheR("+responseObject.response+")");//onchange='isCipheR("$!entity.serialno")'
         }
     }

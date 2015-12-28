@@ -3,10 +3,11 @@ from sqlalchemy import Column,String,create_engine,Integer,DATETIME
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
+from apps import db
 #创建对象的基类
 Base = declarative_base()
 
-class Merchant(Base):
+class Merchant(db.Model):
     #表名
     __tablename__= 'merchant'
     #表的结构

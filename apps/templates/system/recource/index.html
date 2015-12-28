@@ -1,0 +1,59 @@
+{% extends 'common/iframe.html' %}
+{% block iframe %}
+    {% set baseurl='/recource' %}
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+            <a href="{{ baseurl }}/add" class="btn btn-default btn-small">增加</a>
+			<table class="table" id="treeview" >
+				<thead>
+					<tr>
+						<th>
+							名称
+						</th>
+						<th>
+							描述
+						</th>
+						<th>
+							url
+						</th>
+                        <th>
+							图标
+						</th>
+                        <th>
+							操作
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+                    {% for entity in resourcelist %}
+					<tr data-tt-id="{{ entity.id }}" {% if entity.parentId%} data-tt-parent-id="{{ entity.parentId }}" {% endif %}>
+						<td>
+							{{ entity.name }}
+						</td>
+						<td>
+							{{ entity.describe }}
+						</td>
+                        <td>
+							{{ entity.url }}
+						</td>
+                        <td>
+							{{ entity.imgClass }}
+						</td>
+						<td>
+							<a href="{{ baseurl }}/update?id={{ entity.id }}">修改</a>
+                            <a href="{{ baseurl }}/delete?id={{ entity.id }}">删除</a>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+    <script>
+     $(function() {
+        $("#treeview").treetable({ expandable: true });
+      });
+</script>
+{% endblock %}

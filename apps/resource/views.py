@@ -26,3 +26,4 @@ def upload_file():
             session.close()
             f.save(current_app.config.get('UPLOADED_FILE')+resource.file_name)
     return  jsonify(code=0)
+

@@ -2,13 +2,16 @@
 #author:straw
 from apps.base import *
 import datetime
-class Resource(Base):
+from apps import db
+
+class Resource(db.Model):
     ISOTIMEFORMAT='%Y-%m-%d %X'
     #表名
     __tablename__= 'bs_resource'
     #表的结构
     id = Column(String(36),primary_key=True,default=uuid.uuid4().__str__())
     create_date= Column(DateTime,default= time.strftime( ISOTIMEFORMAT, time.localtime() ))#
+    bs_id = db.Column(String(36))
     real_name = Column(String(100))
     state= Column(Integer,default=0)
     file_name = Column(String(100))
@@ -20,3 +23,6 @@ class Resource(Base):
     month_ = Column(String(10))
     kay = Column(String(100))
     md5 = Column(String(100))
+    @classmethod
+    def get(self,id):
+        return Resource.query.filter_by(bs_id=id)

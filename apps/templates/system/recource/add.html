@@ -1,0 +1,24 @@
+{% extends 'common/iframe.html' %}
+{% block iframe %}
+    {% set baseurl = '/recource' %}
+    <form action="{{ baseurl }}/add" method="post">
+        <label>父目录</label>
+        <select name="parentId">
+        <option value=""> ---root---</option>
+        {% for entity in resourcelist %}
+        <option  value="{{ entity.id }}">{{ entity.name }}</option>
+        {% endfor %}
+    </select>
+        <label>名称</label>
+        <input name="name" />
+     <label>url</label>
+        <input name="url" />
+     <label>图标</label>
+        <input name="imgClass" />
+    <label>描述</label>
+    <textarea name="describe"></textarea>
+    <button type="submit" class="btn-success">提交</button>
+    <button type="reset" class="btn btn-default">重置</button>
+    <a class="btn btn-primary" href="{{ baseurl }}">返回</a>
+    </form>
+{% endblock %}

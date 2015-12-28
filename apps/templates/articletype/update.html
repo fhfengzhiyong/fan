@@ -1,0 +1,13 @@
+ {% extends 'common/iframe.html' %}
+{% block iframe %}
+    <form action="/articletype/update" method="post">
+        <input type="hidden" name="oid" value="{{ articleTypeentity.id }}">
+        <label>名称</label>
+        <input name="name" value="{{ articleTypeentity.name }}"/>
+    <label>描述</label>
+    <textarea name="describe">{{ articleTypeentity.describe }}</textarea>
+    <button type="submit" class="btn-success">提交</button>
+    <button type="reset" class="btn btn-default">重置</button>
+    <a class="btn btn-primary" href="/articletype">返回</a>
+    </form>
+ {% endblock %}

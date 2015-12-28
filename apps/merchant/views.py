@@ -2,16 +2,21 @@
 #author:straw
 from flask import Blueprint,render_template,request,flash,redirect
 from jinja2 import TemplateNotFound
-merchant = Blueprint('merchant',__name__,template_folder='templates/merchant')
+
 from models import Merchant
 from apps.config.db import DBSession
+from flask import current_app
 from form import addMerchantFrom
 import uuid
-@merchant.route('/merchant/')
-def index():
-    session = DBSession()
-    merchants = session.query(Merchant)
-    return render_template('merchant/index.html',merchants=merchants)
+from apps import db
+
+merchant = Blueprint('merchant',__name__,template_folder='templates/merchant')
+
+@merchant.route('/merchant/<int:page>')
+@merchant.route('/merchant/',methods=['GET'])
+def index(page=1):
+    pagination = Merchant.query.order_by(db.desc(Merchant.create_date)).paginate(page, current_app.config['POSTS_PER_PAGE'], False)
+    return render_template('merchant/index.html',pagination=pagination)
 
 @merchant.route('/merchant/add',methods=['POST','GET'])
 def add():

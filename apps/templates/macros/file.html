@@ -1,0 +1,5 @@
+{% macro refile(filelist) %}
+     {% for file in filelist %}
+    <li><a href="/resource/id?id={{ file.id }}">{{ file.real_name }}</a></li>
+    {% endfor %}
+{% endmacro %}

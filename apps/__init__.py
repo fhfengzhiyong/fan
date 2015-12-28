@@ -5,6 +5,7 @@ from flask import Flask,render_template,config,redirect,request
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import jinja2
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -17,10 +18,11 @@ db = SQLAlchemy(app)
 from flask.ext.babel import Babel, lazy_gettext
 from apps.merchant.views import merchant
 from apps.user.views import user
-from apps.blogs.views import blogs
+from apps.blogs.views import blogs,articletype
 from apps.config.ue import config
 from apps.resource.views import resource
 from apps.online.views import online
+from apps.system.views import recource
 from flask import  blueprints
 from apps.utils import RegexConverter
 import re
@@ -70,9 +72,11 @@ app.register_blueprint(blogs)
 app.register_blueprint(indexpage)
 app.register_blueprint(resource)
 app.register_blueprint(online)
+app.register_blueprint(articletype)
+app.register_blueprint(recource)
 app.url_map.converters['regex'] = RegexConverter
 app.register_blueprint(config)
-app.config['UPLOADED_FILE']=basedir+'/upload/'
+app.config['UPLOADED_FILE']='E:/workspaces/py/fan/upload/'
 LANGUAGES = app.config['LANGUAGES']
 #国际化
 babel = Babel(app)
@@ -84,4 +88,11 @@ def get_locale():
 env = app.jinja_env
 env.filters['strftime'] = strftime
 env.filters['getUserNamebyId'] = getUserNamebyId
+env.filters['findFileListByBsId'] = findFileListByBsId
 
+#将macros放入到单独的文件。
+my_loader = jinja2.ChoiceLoader([
+    app.jinja_loader,
+    jinja2.FileSystemLoader(['macros']),
+])
+app.jinja_loader = my_loader
