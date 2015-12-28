@@ -7,6 +7,7 @@ from apps.config import db
 from models import User
 from apps.utils import encrypt_password
 import os
+from apps.system.models import Recource
 import apps.sdk.geetest as geetest
 from flask.ext.login import login_user,logout_user,login_required
 # index view function suppressed for brevity
@@ -104,4 +105,5 @@ def logout():
 @user.route('/user/setting',methods=['GET'])
 @login_required
 def ucsetting():
-    return  render_template('uccenter/cucenter.html')
+    recourcelist = Recource.getList().show()
+    return  render_template('uccenter/cucenter.html',recourcelist=recourcelist)

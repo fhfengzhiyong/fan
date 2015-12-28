@@ -84,6 +84,9 @@ babel = Babel(app)
 def get_locale():
     return request.accept_languages.best_match(LANGUAGES.keys()) or 'en'
 
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('/common/404.html')
 
 env = app.jinja_env
 env.filters['strftime'] = strftime
