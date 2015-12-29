@@ -25,7 +25,7 @@ def resourceList():
 @login_required
 def resourceadd():
     if request.method=='GET':
-        resourcelist =Recource.query.all()
+        resourcelist =Recource.gettreelist()
         return render_template('/system/recource/add.html',resourcelist=resourcelist)
     form = request.form
     entity = Recource()
@@ -46,8 +46,7 @@ def resourceadd():
 def resourceupdate():
     if request.method=='GET':
         resource = Recource.query.filter_by(id=request.args['id']).first()
-        print resource.id
-        resourcelist =Recource.query.all()
+        resourcelist =Recource.gettreelist()
         return render_template('/system/recource/update.html',resource=resource,resourcelist=resourcelist)
     form = request.form
     recource = Recource.query.filter_by(id=form.get('id')).first()

@@ -129,7 +129,7 @@ class Tree(object):
 
     def __print_backend(self, nid=None, level=ROOT, idhidden=True, filter=None,
                        key=None, reverse=False, line_type='ascii-ex',
-                       func=print, iflast=[],funclist=print):
+                       func=None, iflast=[],funclist=None,functreelist=None):
         """
         Another implementation of printing tree using Stack
         Print tree structure in hierarchy style.
@@ -173,18 +173,37 @@ class Tree(object):
                             self[nid].tag,
                             self[nid].identifier))
         labelentity = self[nid]
-        print(labelentity)
         filter = (self.__real_true) if (filter is None) else filter
 
         if level == self.ROOT:
-            funclist(labelentity)
-            func(label.encode('utf8'))
+            if functreelist is not None:
+                ns = ('{0}'.format(self[nid].tag.name))\
+                 if idhidden \
+                    else ('{0}[{1}]'.format(
+                            self[nid].tag.name,
+                            self[nid].identifier))
+                labelentity.tag.name='{0}{1}{2}'.format(leading, lasting, ns)
+                functreelist(labelentity)
+            if funclist is not None:
+                funclist(labelentity)
+            if func is not None:
+                func(label.encode('utf8'))
         else:
             leading = ''.join(map(lambda x: DT_VLINE + ' ' * 3
                                   if not x else ' ' * 4, iflast[0:-1]))
             lasting = DT_LINE_COR if iflast[-1] else DT_LINE_BOX
-            funclist(labelentity)
-            func('{0}{1}{2}'.format(leading, lasting, label).encode('utf-8'))
+            if functreelist is not None:
+                ns = ('{0}'.format(self[nid].tag.name))\
+                 if idhidden \
+                    else ('{0}[{1}]'.format(
+                            self[nid].tag.name,
+                            self[nid].identifier))
+                labelentity.tag.name='{0}{1}{2}'.format(leading, lasting, ns)
+                functreelist(labelentity)
+            if funclist is not None:
+                funclist(labelentity)
+            if func is not None:
+                func('{0}{1}{2}'.format(leading, lasting, label).encode('utf-8'))
 
         if filter(self[nid]) and self[nid].expanded:
             queue = [self[i] for i in self[nid].fpointer if filter(self[i])]
@@ -194,7 +213,7 @@ class Tree(object):
             for element in queue:
                 iflast.append(queue.index(element) == len(queue)-1)
                 self.__print_backend(element.identifier, level, idhidden,
-                    filter, key, reverse, line_type, func, iflast,funclist)
+                    filter, key, reverse, line_type, func, iflast,funclist,functreelist)
                 iflast.pop()
     def __update_bpointer(self, nid, parent_id):
         """set self[nid].bpointer"""
@@ -613,11 +632,17 @@ class Tree(object):
         def write(line):
             self.reader += line.decode('utf-8') + "\n"
         def writelist(line):
-            print(type(line))
             self.list.append(line)
         self.__print_backend(nid, level, idhidden, filter,
-            key, reverse, line_type, func=write,funclist=writelist)
-        #print (self.reader)
+                             key, reverse, line_type, func=write,funclist=writelist)
+        return self.list
+    def gettreelist(self, nid=None, level=ROOT, idhidden=True, filter=None,
+             key=None, reverse=False, line_type='ascii-ex'):
+        self.list=[]
+        def writelist(line):
+            self.list.append(line)
+        self.__print_backend(nid, level, idhidden, filter,
+            key, reverse, line_type,functreelist=writelist)
         return self.list
 
     def siblings(self, nid):

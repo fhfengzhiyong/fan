@@ -5,7 +5,8 @@
         <label>父目录</label>
         <select name="parentId">
         <option value=""> ---root---</option>
-        {% for entity in resourcelist %}
+        {% for li in resourcelist %}
+            {% set entity = li.tag %}
         <option  value="{{ entity.id }}">{{ entity.name }}</option>
         {% endfor %}
     </select>

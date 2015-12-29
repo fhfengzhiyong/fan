@@ -22,3 +22,10 @@ class Recource(db.Model):
         for li in list:
             tree.create_node(li,li.id,parent=li.parentId)
         return tree
+    @classmethod
+    def gettreelist(self):
+        list = Recource.query.all()
+        tree = Tree()
+        for li in list:
+            tree.create_node(li,li.id,parent=li.parentId)
+        return tree.gettreelist()
